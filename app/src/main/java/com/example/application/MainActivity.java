@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     int CounterUp = 12000;
     private Button calcBut, makeIterationBut, ReqThreeBut;
 
-    double number_sec = 1.000000;
+    double x = 1.0000;
     public static long t_start;
     public static long next;
 
@@ -32,16 +32,17 @@ public class MainActivity extends AppCompatActivity {
     int timerValue = 0;
 
 
-    Double p1 = 500.0; // Task A
-    Double p2 = 500.0; // Task B
-    Double p3 = 1000.0; // Task C
+    Double ExecutionTimeP1 = 500.0; // Task A
+    Double ExecutionTimeP2 = 500.0; // Task B
+    Double ExecutionTimeP3 = 1000.0; // Task C
 
 
     //deadlines for three task
     private int deadline1 = 2000, deadline2 = 3000, deadline3 = 4000;
 
-    //periods
-    private int periodsT1 = 2000, periodsT2 = 3000, periodsT3 = 4000;
+    //  period  for three task
+    private int periodsTA = 2000, periodsTB = 3000, periodsTC = 4000;
+
 
     // frame_length
     private int frame_length = 2000;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         calcBut.setOnClickListener(v -> {
 
-            FunctionRequired();
+            FirstFunction();
 
 
         });
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
         ReqThreeBut.setOnClickListener(v -> {
 
                     Requirement3();
-
 
 
 //                    final Handler ha = new Handler();
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         return System.currentTimeMillis();
     }
 
-    private void FunctionRequired() {
+    private void FirstFunction() {
         t_start = System.currentTimeMillis();
 
         Task();
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             if (nextDeadLine <= deadline1) {
 
                 try {
-                    Task1();
+                    TaskA();
                     Thread.sleep((long) (0.5 * 1000));
                     flagA = true;
                     deadline1 = deadline1 * i;
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (nextDeadLine <= deadline2) {
                 try {
-                    Task2();
+                    TaskB();
                     Thread.sleep((long) (0.5 * 1000));
                     flagB = true;
                     deadline2 = deadline2 * i;
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (nextDeadLine <= deadline3) {
                 try {
-                    Task3();
+                    TaskC();
                     Thread.sleep((long) (1000));
                     flagC = true;
                     deadline3 = deadline3 * i;
@@ -223,14 +223,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void Task() {
         System.out.println("Log Task1  display  message ");
-        delay(number_sec);
+        delay(x);
 
     }
 
 
-    public static void delay(double secs) {
+    public static void delay(double x) {
         try {
-            Thread.sleep((long) (secs * 1000));
+            Thread.sleep((long) (x * 1000));
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
     private void makeLoop(int n) {
         for (int i = 0; i <= n; i++) {
             System.out.println("Log i Value" + i);
-            FunctionRequired();
+            FirstFunction();
 
 
         }
@@ -260,19 +260,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void Task1() {
-        System.out.println("Log Now Task A Executed   ");
+    private void TaskA() {
 
+        System.out.println("Log Now Task A Executed   ");
 
     }
 
 
-    private void Task2() {
+    private void TaskB() {
+
         System.out.println("Log Now Task B Executed  ");
     }
 
 
-    private void Task3() {
+    private void TaskC() {
+
         System.out.println("Log Now Task C  Executed  ");
 
     }
@@ -289,11 +291,11 @@ public class MainActivity extends AppCompatActivity {
     private void Requirement3() {
 
 
-        for (int i = 1; i <=6; i++) {
+        for (int i = 1; i <= 6; i++) {
 
             StartTimer();
 
-            Handler handler=new Handler();
+            Handler handler = new Handler();
             System.out.println("Log value i  " + i);
 
             int finalI = i;
@@ -310,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                     if (nextDeadLine <= deadline1) {
 
                         try {
-                            Task1();
+                            TaskA();
                             Thread.sleep((long) (0.5 * 1000));
                             flagA = true;
                             deadline1 = deadline1 * finalI;
@@ -323,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (nextDeadLine <= deadline2) {
                         try {
-                            Task2();
+                            TaskB();
                             Thread.sleep((long) (0.5 * 1000));
                             flagB = true;
                             deadline2 = deadline2 * finalI;
@@ -337,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (nextDeadLine <= deadline3) {
                         try {
-                            Task3();
+                            TaskC();
                             Thread.sleep((1000));
                             flagC = true;
                             deadline3 = deadline3 * finalI;
@@ -349,10 +351,8 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
-
                 }
             }, 2000);
-
 
 
         }
@@ -369,16 +369,16 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
 
             timerValue += TIMER_PERIOD;
-            if(timerValue<=deadline1){
-                Task1();
+            if (timerValue <= deadline1) {
+                TaskA();
 
             }
-            if(timerValue==deadline2){
-                Task2();
+            if (timerValue == deadline2) {
+                TaskB();
 
             }
-            if(timerValue==deadline3){
-                Task3();
+            if (timerValue == deadline3) {
+                TaskC();
 
             }
 
@@ -387,11 +387,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
-
-
-
-
 
 
 }
