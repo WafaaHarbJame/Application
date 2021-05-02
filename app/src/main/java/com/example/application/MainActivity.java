@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +18,7 @@ public class MainActivity extends AppCompatActivity {
     int CounterUp = 12000;
     private Button calcBut, makeIterationBut, ReqThreeBut;
 
-    double number_sec = 0.969565;
-
+    double number_sec = 1.000000;
     public static long t_start;
     public static long next;
 
@@ -31,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     CountDownTimer downTimer = null;
 
     Timer timer = null;
-    int TIMER_PERIOD = 2000;
+    int TIMER_PERIOD = 500;
     int timerValue = 0;
 
 
@@ -39,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
     Double p2 = 500.0; // Task B
     Double p3 = 1000.0; // Task C
 
-    //deadlines
-    private int d1 = 2000, d2 = 3000, d3 = 4000;
+
+    //deadlines for three task
+    private int deadline1 = 2000, deadline2 = 3000, deadline3 = 4000;
 
     //periods
-    private int T1 = 2000, T2 = 3000, T3 = 4000;
+    private int periodsT1 = 2000, periodsT2 = 3000, periodsT3 = 4000;
 
     // frame_length
     private int frame_length = 2000;
@@ -55,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         initView();
-
 
         calcBut.setOnClickListener(v -> {
 
@@ -73,22 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
         ReqThreeBut.setOnClickListener(v -> {
 
-                    long next = clock();
-                    while (true) {
-
-                        while (clock() < next){}
-
-                        Task1();
-                        Task2();
-                        Task3();
-                        next=next+frame_length;
-//                        next:=next+T;
-//                        x:= next – clock();
+                    Requirement3();
 
 
 
-
-                    }
 //                    final Handler ha = new Handler();
 //                    ha.postDelayed(new Runnable() {
 //
@@ -171,8 +155,6 @@ public class MainActivity extends AppCompatActivity {
 
         test_time = t_finish - t_start;
 
-
-        System.out.println("Log test_time in Milliseconds " + test_time);
         System.out.println("Log test_time in seconds " + test_time / 1000.0);
     }
 
@@ -189,13 +171,13 @@ public class MainActivity extends AppCompatActivity {
 
             boolean flagA = false, flagB = false, flagC = false;
 
-            if (nextDeadLine <= d1) {
+            if (nextDeadLine <= deadline1) {
 
                 try {
                     Task1();
                     Thread.sleep((long) (0.5 * 1000));
                     flagA = true;
-                    d1 = d1 * i;
+                    deadline1 = deadline1 * i;
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -203,12 +185,12 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-            if (nextDeadLine <= d2) {
+            if (nextDeadLine <= deadline2) {
                 try {
                     Task2();
                     Thread.sleep((long) (0.5 * 1000));
                     flagB = true;
-                    d2 = d2 * i;
+                    deadline2 = deadline2 * i;
 
 
                 } catch (InterruptedException e) {
@@ -217,12 +199,12 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-            if (nextDeadLine <= d3) {
+            if (nextDeadLine <= deadline3) {
                 try {
                     Task3();
                     Thread.sleep((long) (1000));
                     flagC = true;
-                    d3 = d3 * i;
+                    deadline3 = deadline3 * i;
 
 
                 } catch (InterruptedException e) {
@@ -240,9 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void Task() {
-
-        Toast.makeText(this, "Log Task display  message", Toast.LENGTH_SHORT).show();
-
+        System.out.println("Log Task1  display  message ");
         delay(number_sec);
 
     }
@@ -298,12 +278,84 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void StartTime1() {
+    private void StartTimer() {
 
         timer = new Timer();
         timer.schedule(new ProgressUpdate(), 0, TIMER_PERIOD);
 
 
+    }
+
+    private void Requirement3() {
+
+
+        for (int i = 1; i <=6; i++) {
+
+            StartTimer();
+
+            Handler handler=new Handler();
+            System.out.println("Log value i  " + i);
+
+            int finalI = i;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+
+                    int nextDeadLine = finalI * frame_length;
+
+
+                    boolean flagA = false, flagB = false, flagC = false;
+
+                    if (nextDeadLine <= deadline1) {
+
+                        try {
+                            Task1();
+                            Thread.sleep((long) (0.5 * 1000));
+                            flagA = true;
+                            deadline1 = deadline1 * finalI;
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                    if (nextDeadLine <= deadline2) {
+                        try {
+                            Task2();
+                            Thread.sleep((long) (0.5 * 1000));
+                            flagB = true;
+                            deadline2 = deadline2 * finalI;
+
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                    if (nextDeadLine <= deadline3) {
+                        try {
+                            Task3();
+                            Thread.sleep((1000));
+                            flagC = true;
+                            deadline3 = deadline3 * finalI;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+
+                }
+            }, 2000);
+
+
+
+        }
     }
 
 
@@ -317,44 +369,29 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
 
             timerValue += TIMER_PERIOD;
+            if(timerValue<=deadline1){
+                Task1();
+
+            }
+            if(timerValue==deadline2){
+                Task2();
+
+            }
+            if(timerValue==deadline3){
+                Task3();
+
+            }
 
             System.out.println("Log timer value1 = " + timerValue);
-
-
-//
-//            cyclicFunction();
-//            System.out.println("Log timer value = " + timerValue);
-//
-//
 
 
         }
     }
 
 
-//    private void StartTimer() {
-//
-//        downTimer = new CountDownTimer((12000) * 1000, 1000) {
-//
-//            @RequiresApi(api = Build.VERSION_CODES.O)
-//            public void onTick(long millisUntilFinished) {
-//
-//                int counterDown = (int) (millisUntilFinished / 1000);
-//                timerCount = CounterUp - counterDown;
-//                System.out.println("Log timerCount tick "+timerCount);
-//
-//               // cyclicFunction();
-//
-//
-//            }
-//
-//            public void onFinish() {
-//                System.out.println("Log Done ");
-//
-//            }
-//        }.start();
-//
-//    }
+
+
+
 
 
 }
