@@ -8,13 +8,13 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:layout_width="wrap_content"
         android:id="@+id/secondsEt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Enter Number of second "
+        android:inputType="number"
         android:text="1"
         android:visibility="gone"
-        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,46 +22,62 @@
 
 
     <Button
-        android:layout_width="match_parent"
         android:id="@+id/calcTimeBut"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="30dp"
-        android:padding="16dp"
-        android:layout_marginStart="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="First Requirement"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textColor="@color/white"
-        app:layout_constraintRight_toRightOf="parent"
-      />
-    <Button
         android:layout_width="match_parent"
-        android:id="@+id/makeIterationBut"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="30dp"
         android:padding="16dp"
-        android:layout_marginStart="30dp"
-        android:text="Second Requirement"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="First Requirement"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/makeIterationBut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        android:padding="16dp"
+        android:text="Second Requirement"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calcTimeBut" />
+
     <Button
-        android:layout_width="match_parent"
         android:id="@+id/ReqThreeBut"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="30dp"
         android:padding="16dp"
-        android:layout_marginStart="30dp"
         android:text="Third Requirement"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/makeIterationBut" />
+
+
+    <Button
+        android:id="@+id/ReqFourBut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        android:padding="16dp"
+        android:text="Four Requirement"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ReqThreeBut" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

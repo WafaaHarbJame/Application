@@ -3,6 +3,7 @@ package com.example.application;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,40 +12,33 @@ import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static long t_finish;
-    int CounterUp = 12000;
-    private Button calcBut, makeIterationBut, ReqThreeBut;
+    private Button calcBut, makeIterationBut, ReqThreeBut,ReqFourBut;
 
     double x = 1.0000;
+
+    private static long t_finish;
     public static long t_start;
+    public static long test_time;
+
     public static long next;
 
-    public static long test_time;
-    private int timerCount;
 
-    CountDownTimer downTimer = null;
-
-    Timer timer = null;
-    int TIMER_PERIOD = 500;
-    int timerValue = 0;
-
-
-    long ExecutionTimeP1 = 490; // Task A
-    long ExecutionTimeP2 = 490; // Task B
-    long ExecutionTimeP3 = 990; // Task C
-
+    long ExecutionTimeP1 = 500; // Task A
+    long ExecutionTimeP2 = 500; // Task B
+    long ExecutionTimeP3 = 1000; // Task C
 
     //deadlines for three task
     private final int deadline1 = 2000, deadline2 = 3000, deadline3 = 4000;
-
-    //  period  for three task
-    private int periodsTA = 2000, periodsTB = 3000, periodsTC = 4000;
-
 
     // frame_length
     private final int frame_length = 2000;
     private final int last_frame = 6 * 2000;
 
+
+    //  period  for three task
+    private int periodsTA = 2000, periodsTB = 3000, periodsTC = 4000;
+
+    long ExecutionTimeP3oVer = 1500; // Task C
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }
         );
+
+        ReqFourBut.setOnClickListener(v -> {
+
+            Requirement4()  ;
+        });
 
 
     }
@@ -110,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         calcBut = findViewById(R.id.calcTimeBut);
         makeIterationBut = findViewById(R.id.makeIterationBut);
         ReqThreeBut = findViewById(R.id.ReqThreeBut);
+        ReqFourBut = findViewById(R.id.ReqFourBut);
 
 
     }
@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
                     TaskC();
                     break;
             }
-
             if (minorCycle < last_frame)
                 minorCycle += frame_length;
             else {
@@ -168,14 +167,66 @@ public class MainActivity extends AppCompatActivity {
             }
 
             next = next + frame_length;
-            if (clock() > next) {
-                Log.e("Main", "Log ************ OverRun **********");
-                break;
-            }
+
             System.out.println("Log ************ Check Next Frame **********");
         }
 
     }
+
+
+    private void Requirement4() {
+
+        next = clock();
+        int minorCycle = deadline1;
+        while (true) {
+            while (clock() < next) {
+            }
+            switch (minorCycle) {
+                case (frame_length):
+                    TaskA();
+                    TaskB();
+                    TaskCOverRun();
+                    break;
+                case (2 * frame_length):
+                    TaskA();
+                    break;
+                case (3 * frame_length):
+                    TaskA();
+                    TaskB();
+                    TaskCOverRun();
+                    break;
+                case (4 * frame_length):
+                    TaskA();
+                    TaskB();
+                    break;
+                case (5 * frame_length):
+                    TaskA();
+                    break;
+                case (6 * frame_length):
+                    TaskA();
+                    TaskB();
+                    TaskCOverRun();
+                    break;
+            }
+            if (minorCycle < last_frame)
+                minorCycle += frame_length;
+            else {
+                minorCycle = deadline1;
+                Log.w("Main", "Log ************ Repeat From Start **********");
+            }
+
+            next = next + frame_length;
+
+            if (clock() > next) {
+                Log.e("Main", "Log ************ OverRun **********");
+                break;
+            }
+
+            System.out.println("Log ************ Check Next Frame **********");
+        }
+
+    }
+
 
 
     private long clock() {
@@ -211,6 +262,17 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Log Now Task C  Executed  ");
         try {
             Thread.sleep(ExecutionTimeP3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void TaskCOverRun() {
+
+        System.out.println("Log Now Task C  Executed  ");
+        try {
+            Thread.sleep(ExecutionTimeP3oVer);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
