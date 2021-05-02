@@ -1,18 +1,13 @@
 package com.example.application;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.widget.Button;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -181,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
     private long clock() {
         return System.currentTimeMillis();
